@@ -1,0 +1,153 @@
+openapi: 3.1.0
+info:
+  title: RestaurantPro API
+  version: 0.1.0
+  description: |
+    API REST pública e endpoints internos de observabilidade do RestaurantPro.
+servers:
+  - url: http://localhost:3000
+    description: Local development
+paths:
+  /api/health:
+    get:
+      summary: Health check completo
+      tags: [Observability]
+      responses:
+        "200":
+          description: Estado do sistema
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HealthResponse"
+  /api/monitoring:
+    get:
+      summary: Snapshot resumido de monitoramento
+      tags: [Observability]
+      responses:
+        "200":
+          description: Métricas e checks do sistema
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MonitoringResponse"
+  /api/auth/{nextauth}:
+    get:
+      summary: Handlers NextAuth
+      tags: [Authentication]
+      parameters:
+        - name: nextauth
+          in: path
+          required: true
+          schema:
+            type: string
+          description: Rota dinâmica usada pelo NextAuth.
+      responses:
+        "200":
+          description: Resposta do fluxo autenticado
+        "401":
+          description: Não autenticado
+    post:
+      summary: Handlers NextAuth
+      tags: [Authentication]
+      parameters:
+        - name: nextauth
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: false
+      responses:
+        "200":
+          description: Resposta do fluxo autenticado
+        "401":
+          description: Não autenticado
+components:
+  schemas:
+    HealthResponse:
+      type: object
+      required: [name, phase, status, timestamp, uptimeSeconds, checks, metrics, observability]
+      properties:
+        name:
+          type: string
+        phase:
+          type: string
+        status:
+          type: string
+          enum: [ok, degraded, down]
+        timestamp:
+          type: string
+          format: date-time
+        uptimeSeconds:
+          type: integer
+        checks:
+          type: object
+          properties:
+            database:
+              type: object
+              properties:
+                status:
+                  type: string
+                  enum: [ok, degraded, down]
+                latencyMs:
+                  type: [integer, "null"]
+                error:
+                  type: [string, "null"]
+        metrics:
+          type: object
+          properties:
+            memoryRssMb:
+              type: integer
+            heapUsedMb:
+              type: integer
+            activeHandles:
+              type: integer
+        observability:
+          type: object
+          properties:
+            events:
+              type: array
+              items:
+                type: object
+            metrics:
+              type: array
+              items:
+                type: object
+            adapters:
+              type: array
+              items:
+                type: object
+    MonitoringResponse:
+      type: object
+      required: [status, timestamp, metrics, checks, observability]
+      properties:
+        status:
+          type: string
+          enum: [ok, degraded, down]
+        timestamp:
+          type: string
+          format: date-time
+        metrics:
+          type: object
+        checks:
+          type: object
+        observability:
+          type: object
+    WebhookEvent:
+      type: object
+      required: [tenantId, restaurantId, event, source, data]
+      properties:
+        tenantId:
+          type: string
+        restaurantId:
+          type: string
+        event:
+          type: string
+        source:
+          type: string
+        data:
+          type: object
+        metadata:
+          type: object
+          nullable: true
+

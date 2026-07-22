@@ -1,0 +1,29 @@
+name: Deploy Preview
+
+on:
+  workflow_dispatch:
+  pull_request:
+
+jobs:
+  preview:
+    runs-on: ubuntu-latest
+    environment: preview
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 9
+      - name: Install
+        run: pnpm install --frozen-lockfile
+      - name: Build preview artifact
+        run: pnpm prisma:generate && pnpm build
+      - name: Preview ready
+        run: echo "Preview build concluído. Conectar este job ao provedor de deploy escolhido."
+

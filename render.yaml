@@ -1,0 +1,9 @@
+services:
+  - type: web
+    name: restaurantpro
+    env: node
+    plan: starter
+    buildCommand: pnpm prisma:generate && pnpm build
+    startCommand: pnpm start
+    healthCheckPath: /api/health
+

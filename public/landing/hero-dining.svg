@@ -1,0 +1,39 @@
+<svg width="1200" height="960" viewBox="0 0 1200 960" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="120" y1="60" x2="1080" y2="900" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#0F172A"/>
+      <stop offset="0.52" stop-color="#1E293B"/>
+      <stop offset="1" stop-color="#334155"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(360 180) rotate(90) scale(520 520)">
+      <stop stop-color="#F59E0B" stop-opacity="0.45"/>
+      <stop offset="1" stop-color="#F59E0B" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="plate" x1="280" y1="260" x2="920" y2="760" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#F8FAFC"/>
+      <stop offset="1" stop-color="#CBD5E1"/>
+    </linearGradient>
+    <linearGradient id="dish" x1="420" y1="340" x2="760" y2="650" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#7C2D12"/>
+      <stop offset="1" stop-color="#EA580C"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="960" rx="56" fill="url(#bg)"/>
+  <rect width="1200" height="960" rx="56" fill="url(#glow)"/>
+  <circle cx="860" cy="180" r="180" fill="#FDE68A" fill-opacity="0.08"/>
+  <circle cx="940" cy="280" r="110" fill="#22C55E" fill-opacity="0.08"/>
+  <rect x="110" y="110" width="980" height="740" rx="40" fill="#0F172A" fill-opacity="0.3" stroke="#F8FAFC" stroke-opacity="0.12"/>
+  <rect x="190" y="210" width="820" height="18" rx="9" fill="#F8FAFC" fill-opacity="0.16"/>
+  <rect x="220" y="250" width="180" height="420" rx="28" fill="#CBD5E1" fill-opacity="0.08"/>
+  <rect x="800" y="250" width="180" height="420" rx="28" fill="#CBD5E1" fill-opacity="0.08"/>
+  <circle cx="600" cy="500" r="210" fill="url(#plate)"/>
+  <circle cx="600" cy="500" r="160" fill="#F8FAFC"/>
+  <circle cx="600" cy="500" r="118" fill="#E2E8F0"/>
+  <path d="M532 425C566 392 634 392 668 425C691 447 699 481 685 512C671 543 642 556 600 566C558 556 529 543 515 512C501 481 509 447 532 425Z" fill="url(#dish)"/>
+  <path d="M485 472C520 447 555 443 600 453C645 443 680 447 715 472C698 512 665 530 600 538C535 530 502 512 485 472Z" fill="#FB923C"/>
+  <circle cx="560" cy="430" r="14" fill="#FDE68A"/>
+  <circle cx="640" cy="430" r="14" fill="#FDE68A"/>
+  <path d="M540 620C574 598 626 598 660 620C644 651 619 666 600 666C581 666 556 651 540 620Z" fill="#0F172A" fill-opacity="0.16"/>
+  <rect x="250" y="708" width="700" height="20" rx="10" fill="#F8FAFC" fill-opacity="0.12"/>
+  <rect x="340" y="736" width="520" height="12" rx="6" fill="#F8FAFC" fill-opacity="0.1"/>
+</svg>

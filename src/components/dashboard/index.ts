@@ -1,0 +1,24 @@
+export * from "./category-manager";
+export * from "./analytics";
+export * from "./branding-studio";
+export * from "./crm";
+export * from "./loyalty";
+export * from "./coupons";
+export * from "./cashback";
+export * from "./payments";
+export * from "./settings";
+export * from "./dashboard-shell";
+export * from "./reports";
+export * from "./finance";
+export * from "./order-history";
+export * from "./product-manager";
+export * from "./table-manager";
+export * from "./reservations";
+export * from "./delivery";
+export * from "./drivers";
+export * from "./tracking";
+export * from "./admin";
+export * from "./subscriptions";
+export * from "./plans";
+
+export const DASHBOARD_COMPONENTS_READY = true;

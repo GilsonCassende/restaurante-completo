@@ -1,0 +1,21 @@
+<svg width="1200" height="900" viewBox="0 0 1200 900" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1200" y2="900" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#ECFDF5"/>
+      <stop offset="1" stop-color="#DBEAFE"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="900" rx="48" fill="url(#bg)"/>
+  <g opacity="0.7">
+    <rect x="120" y="150" width="960" height="600" rx="36" fill="#FFFFFF" fill-opacity="0.65"/>
+    <path d="M220 250H980" stroke="#94A3B8" stroke-width="10" stroke-linecap="round" stroke-dasharray="2 28"/>
+    <path d="M220 400H980" stroke="#94A3B8" stroke-width="10" stroke-linecap="round" stroke-dasharray="2 28"/>
+    <path d="M220 550H980" stroke="#94A3B8" stroke-width="10" stroke-linecap="round" stroke-dasharray="2 28"/>
+    <path d="M280 210V690" stroke="#94A3B8" stroke-width="10" stroke-linecap="round" stroke-dasharray="2 28"/>
+    <path d="M520 210V690" stroke="#94A3B8" stroke-width="10" stroke-linecap="round" stroke-dasharray="2 28"/>
+    <path d="M760 210V690" stroke="#94A3B8" stroke-width="10" stroke-linecap="round" stroke-dasharray="2 28"/>
+  </g>
+  <path d="M785 356C785 299 738 252 681 252C624 252 577 299 577 356C577 439 681 548 681 548C681 548 785 439 785 356Z" fill="#16A34A"/>
+  <circle cx="681" cy="356" r="30" fill="#F8FAFC"/>
+  <path d="M645 356C645 336 661 320 681 320C701 320 717 336 717 356C717 376 701 392 681 392C661 392 645 376 645 356Z" fill="#0F172A" fill-opacity="0.35"/>
+</svg>
