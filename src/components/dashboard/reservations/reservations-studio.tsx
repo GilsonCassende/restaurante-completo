@@ -395,7 +395,7 @@ export function ReservationsStudio({ restaurantName, tables, reservations, resul
         </TableShell>
 
         <div className="space-y-4">
-          <Card className="border-border/70 bg-card/90 shadow-sm backdrop-blur">
+          <Card className="border-border/70 bg-gradient-to-br from-card via-card to-muted/20 shadow-[var(--shadow-soft)] backdrop-blur">
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
                 <Filter className="h-5 w-5" />
@@ -417,7 +417,7 @@ export function ReservationsStudio({ restaurantName, tables, reservations, resul
             </CardContent>
           </Card>
 
-          <Card className="border-border/70 bg-card/90 shadow-sm backdrop-blur">
+          <Card className="border-border/70 bg-gradient-to-br from-card via-card to-muted/20 shadow-[var(--shadow-soft)] backdrop-blur">
             <CardHeader>
               <CardTitle>Status das mesas</CardTitle>
               <CardDescription>Estado atual das mesas com base nas reservas do dia selecionado.</CardDescription>
@@ -435,7 +435,7 @@ export function ReservationsStudio({ restaurantName, tables, reservations, resul
             </CardContent>
           </Card>
 
-          <Card className="border-border/70 bg-card/90 shadow-sm backdrop-blur">
+          <Card className="border-border/70 bg-gradient-to-br from-card via-card to-muted/20 shadow-[var(--shadow-soft)] backdrop-blur">
             <CardHeader>
               <CardTitle>Timeline</CardTitle>
               <CardDescription>Histórico completo da reserva selecionada.</CardDescription>

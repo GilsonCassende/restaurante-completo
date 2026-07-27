@@ -2,7 +2,7 @@
 
 import { useMemo, useState } from "react";
 import Link from "next/link";
-import { ArrowLeft, CalendarDays, CheckCircle2, Clock3, Loader2, MapPin, MessageSquareText, PartyPopper, PhoneCall, Sparkles, Table2, Users } from "lucide-react";
+import { ArrowLeft, CalendarDays, CheckCircle2, Clock3, MapPin, MessageSquareText, PhoneCall, Sparkles, Table2, Users } from "lucide-react";
 import { createReservationAction } from "@/actions/reservation";
 import { useReservationWizard } from "@/hooks/reservations";
 import { Badge } from "@/components/ui/badge";
@@ -183,7 +183,7 @@ export function ReservationFlow({ restaurant, tables, reservations }: Reservatio
 
   return (
     <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_360px]">
-      <Card className="border-border/70 bg-card/90 shadow-sm backdrop-blur">
+      <Card className="border-border/70 bg-gradient-to-br from-card via-card to-muted/20 shadow-[var(--shadow-soft)] backdrop-blur">
         <CardHeader>
           <div className="flex flex-wrap items-center justify-between gap-3">
             <div className="space-y-2">
@@ -212,6 +212,7 @@ export function ReservationFlow({ restaurant, tables, reservations }: Reservatio
                 variant={wizard.state.step === item.id ? "default" : "outline"}
                 size="sm"
                 onClick={() => wizard.goToStep(item.id as typeof wizard.state.step)}
+                disabled={submitting}
                 className={cn("justify-start", index > 0 && "md:justify-center")}
               >
                 {item.label}
@@ -239,8 +240,7 @@ export function ReservationFlow({ restaurant, tables, reservations }: Reservatio
                 ))}
               </div>
               <div className="flex flex-wrap gap-3">
-                <Button onClick={wizard.nextStep}>
-                  <PartyPopper className="h-4 w-4" />
+                <Button onClick={wizard.nextStep} loading={submitting}>
                   Começar reserva
                 </Button>
                 <Button asChild variant="outline">
@@ -264,6 +264,7 @@ export function ReservationFlow({ restaurant, tables, reservations }: Reservatio
                     id="reservation-date"
                     type="date"
                     value={wizard.state.reservationDate}
+                    disabled={submitting}
                     onChange={(event) => wizard.setReservationDate(event.target.value)}
                   />
                 </div>
@@ -275,6 +276,7 @@ export function ReservationFlow({ restaurant, tables, reservations }: Reservatio
                     id="reservation-time"
                     type="time"
                     value={wizard.state.reservationTime}
+                    disabled={submitting}
                     onChange={(event) => wizard.setReservationTime(event.target.value)}
                   />
                 </div>
@@ -296,6 +298,7 @@ export function ReservationFlow({ restaurant, tables, reservations }: Reservatio
                         variant={wizard.state.reservationTime === slot ? "default" : "outline"}
                         size="sm"
                         onClick={() => wizard.setReservationTime(slot)}
+                        disabled={submitting}
                       >
                         {slot}
                       </Button>
@@ -305,10 +308,10 @@ export function ReservationFlow({ restaurant, tables, reservations }: Reservatio
               </div>
 
               <div className="flex gap-3">
-                <Button type="button" variant="outline" onClick={wizard.prevStep}>
+                <Button type="button" variant="outline" onClick={wizard.prevStep} disabled={submitting}>
                   Voltar
                 </Button>
-                <Button type="button" onClick={wizard.nextStep} disabled={!wizard.state.reservationDate || !wizard.state.reservationTime}>
+                <Button type="button" onClick={wizard.nextStep} disabled={!wizard.state.reservationDate || !wizard.state.reservationTime || submitting}>
                   Próximo
                 </Button>
               </div>
@@ -328,6 +331,7 @@ export function ReservationFlow({ restaurant, tables, reservations }: Reservatio
                     min={1}
                     max={20}
                     value={wizard.state.guests}
+                    disabled={submitting}
                     onChange={(event) => wizard.setGuests(Number(event.target.value || 1))}
                   />
                 </div>
@@ -339,6 +343,7 @@ export function ReservationFlow({ restaurant, tables, reservations }: Reservatio
                     id="reservation-table"
                     className="flex h-10 w-full rounded-xl border border-input bg-background px-3 py-2 text-sm"
                     value={wizard.state.tableId}
+                    disabled={submitting}
                     onChange={(event) => wizard.setTableId(event.target.value)}
                   >
                     <option value="">Selecione a mesa</option>
@@ -370,10 +375,10 @@ export function ReservationFlow({ restaurant, tables, reservations }: Reservatio
               </div>
 
               <div className="flex gap-3">
-                <Button type="button" variant="outline" onClick={wizard.prevStep}>
+                <Button type="button" variant="outline" onClick={wizard.prevStep} disabled={submitting}>
                   Voltar
                 </Button>
-                <Button type="button" onClick={wizard.nextStep} disabled={!wizard.state.tableId}>
+                <Button type="button" onClick={wizard.nextStep} disabled={!wizard.state.tableId || submitting}>
                   Próximo
                 </Button>
               </div>
@@ -385,19 +390,19 @@ export function ReservationFlow({ restaurant, tables, reservations }: Reservatio
               <div className="grid gap-4 md:grid-cols-2">
                 <div className="space-y-2">
                   <label className="text-sm font-medium">Nome</label>
-                  <Input value={wizard.state.customerName} onChange={(event) => wizard.setCustomerName(event.target.value)} placeholder="Nome completo" />
+                  <Input value={wizard.state.customerName} onChange={(event) => wizard.setCustomerName(event.target.value)} placeholder="Nome completo" disabled={submitting} />
                 </div>
                 <div className="space-y-2">
                   <label className="text-sm font-medium">Telefone</label>
-                  <Input value={wizard.state.customerPhone} onChange={(event) => wizard.setCustomerPhone(event.target.value)} placeholder="+244..." />
+                  <Input value={wizard.state.customerPhone} onChange={(event) => wizard.setCustomerPhone(event.target.value)} placeholder="+244..." disabled={submitting} />
                 </div>
                 <div className="space-y-2">
                   <label className="text-sm font-medium">E-mail</label>
-                  <Input value={wizard.state.customerEmail} onChange={(event) => wizard.setCustomerEmail(event.target.value)} type="email" placeholder="cliente@exemplo.com" />
+                  <Input value={wizard.state.customerEmail} onChange={(event) => wizard.setCustomerEmail(event.target.value)} type="email" placeholder="cliente@exemplo.com" disabled={submitting} />
                 </div>
                 <div className="space-y-2">
                   <label className="text-sm font-medium">Observações</label>
-                  <Textarea value={wizard.state.notes} onChange={(event) => wizard.setNotes(event.target.value)} placeholder="Aniversário, acessibilidade, cadeiras extras..." />
+                  <Textarea value={wizard.state.notes} onChange={(event) => wizard.setNotes(event.target.value)} placeholder="Aniversário, acessibilidade, cadeiras extras..." disabled={submitting} />
                 </div>
               </div>
 
@@ -420,14 +425,13 @@ export function ReservationFlow({ restaurant, tables, reservations }: Reservatio
                 </div>
               </div>
 
-              {resultMessage ? <p className="rounded-2xl bg-muted px-4 py-3 text-sm text-muted-foreground">{resultMessage}</p> : null}
+              {resultMessage ? <p role="status" className="rounded-2xl bg-muted px-4 py-3 text-sm text-muted-foreground">{resultMessage}</p> : null}
 
               <div className="flex gap-3">
-                <Button type="button" variant="outline" onClick={wizard.prevStep}>
+                <Button type="button" variant="outline" onClick={wizard.prevStep} disabled={submitting}>
                   Voltar
                 </Button>
-                <Button type="button" onClick={() => void submit()} disabled={!canReview || submitting}>
-                  {submitting ? <Loader2 className="h-4 w-4 animate-spin" /> : <CheckCircle2 className="h-4 w-4" />}
+                <Button type="button" onClick={() => void submit()} loading={submitting} disabled={!canReview}>
                   Confirmar reserva
                 </Button>
               </div>
@@ -466,7 +470,7 @@ export function ReservationFlow({ restaurant, tables, reservations }: Reservatio
       </Card>
 
       <aside className="space-y-4 lg:sticky lg:top-24">
-        <Card className="border-border/70 bg-card/90 shadow-sm backdrop-blur">
+        <Card className="border-border/70 bg-gradient-to-br from-card via-card to-muted/20 shadow-[var(--shadow-soft)] backdrop-blur">
           <CardHeader>
             <CardTitle>Resumo do restaurante</CardTitle>
             <CardDescription>Informações rápidas para a reserva.</CardDescription>
@@ -504,7 +508,7 @@ export function ReservationFlow({ restaurant, tables, reservations }: Reservatio
           </CardContent>
         </Card>
 
-        <Card className="border-border/70 bg-card/90 shadow-sm backdrop-blur">
+        <Card className="border-border/70 bg-gradient-to-br from-card via-card to-muted/20 shadow-[var(--shadow-soft)] backdrop-blur">
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
               <CalendarDays className="h-5 w-5" />

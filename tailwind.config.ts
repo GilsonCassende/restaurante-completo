@@ -63,11 +63,11 @@ const config: Config = {
         "2xl": "1.5rem",
       },
       boxShadow: {
-        soft: "0 24px 60px -20px rgb(15 23 42 / 0.35)",
+        soft: "0 18px 50px -28px rgb(15 23 42 / 0.22)",
       },
       fontFamily: {
-        sans: ["Aptos", "Segoe UI", "Helvetica Neue", "sans-serif"],
-        mono: ["Cascadia Mono", "SFMono-Regular", "monospace"],
+        sans: ["var(--font-sans)"],
+        mono: ["var(--font-mono)"],
       },
       backgroundImage: {
         "hero-radial":

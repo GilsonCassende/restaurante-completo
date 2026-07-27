@@ -10,6 +10,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
+import { ConfirmationDialog } from "@/components/design-system/dialogs";
 import { cn } from "@/lib/utils";
 import { createCategorySchema, type CreateCategoryInput } from "@/schemas";
 import type { Category } from "@/types";
@@ -37,6 +38,7 @@ function formatDate(value: Date) {
 export function CategoryManager({ categories }: CategoryManagerProps) {
   const router = useRouter();
   const [editingCategory, setEditingCategory] = useState<Category | null>(null);
+  const [deleteTarget, setDeleteTarget] = useState<Category | null>(null);
   const [message, setMessage] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -81,26 +83,31 @@ export function CategoryManager({ categories }: CategoryManagerProps) {
     }
   });
 
-  const handleDelete = (id: string) => {
-    if (!window.confirm("Deseja excluir esta categoria? Os produtos relacionados serão removidos.")) {
+  const handleDelete = (category: Category) => {
+    setDeleteTarget(category);
+  };
+
+  const confirmDelete = () => {
+    if (!deleteTarget) {
       return;
     }
 
     setMessage("");
     setIsSubmitting(true);
     void (async () => {
-      const result = await deleteCategoryAction({ id });
+      const result = await deleteCategoryAction({ id: deleteTarget.id });
       if (!result.ok) {
         setMessage(result.message);
         setIsSubmitting(false);
         return;
       }
 
-      if (editingCategory?.id === id) {
+      if (editingCategory?.id === deleteTarget.id) {
         setEditingCategory(null);
       }
 
       setMessage("Categoria removida com sucesso.");
+      setDeleteTarget(null);
       router.refresh();
       setIsSubmitting(false);
     })();
@@ -108,7 +115,7 @@ export function CategoryManager({ categories }: CategoryManagerProps) {
 
   return (
     <div className="grid gap-6 lg:grid-cols-[380px_minmax(0,1fr)]">
-      <Card className="border-border/70 bg-card/90 shadow-sm backdrop-blur">
+      <Card className="border-border/70 bg-gradient-to-br from-card via-card to-muted/20 shadow-[var(--shadow-soft)] backdrop-blur">
         <CardHeader>
           <CardTitle>{editingCategory ? "Editar categoria" : "Nova categoria"}</CardTitle>
           <CardDescription>
@@ -171,7 +178,7 @@ export function CategoryManager({ categories }: CategoryManagerProps) {
         </CardContent>
       </Card>
 
-      <Card className="border-border/70 bg-card/90 shadow-sm backdrop-blur">
+      <Card className="border-border/70 bg-gradient-to-br from-card via-card to-muted/20 shadow-[var(--shadow-soft)] backdrop-blur">
         <CardHeader>
           <div className="flex flex-wrap items-center justify-between gap-3">
             <div>
@@ -205,7 +212,7 @@ export function CategoryManager({ categories }: CategoryManagerProps) {
                       <PencilLine className="h-4 w-4" />
                       Editar
                     </Button>
-                    <Button variant="outline" size="sm" onClick={() => handleDelete(category.id)} disabled={isSubmitting}>
+                    <Button variant="outline" size="sm" onClick={() => handleDelete(category)} disabled={isSubmitting}>
                       <Trash2 className="h-4 w-4" />
                       Excluir
                     </Button>
@@ -221,6 +228,22 @@ export function CategoryManager({ categories }: CategoryManagerProps) {
           )}
         </CardContent>
       </Card>
+
+      <ConfirmationDialog
+        open={Boolean(deleteTarget)}
+        title="Excluir categoria"
+        description={
+          deleteTarget
+            ? `A categoria "${deleteTarget.name}" será removida. Os produtos relacionados também serão afetados. Esta ação não pode ser desfeita.`
+            : ""
+        }
+        confirmLabel="Excluir categoria"
+        cancelLabel="Manter categoria"
+        intent="destructive"
+        loading={isSubmitting}
+        onConfirm={confirmDelete}
+        onCancel={() => setDeleteTarget(null)}
+      />
     </div>
   );
 }

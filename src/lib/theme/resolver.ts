@@ -9,10 +9,10 @@ import {
 import type { ThemeModeTokens, ThemePresetKey, ThemeRadiusKey, ThemeStyleKey, ThemeTokens } from "./types";
 
 const DEFAULTS = {
-  primary: "#0f766e",
+  primary: "#0f172a",
   secondary: "#115e59",
-  accent: "#f59e0b",
-  background: "#f8fafc",
+  accent: "#b45309",
+  background: "#f8faf7",
   surface: "#ffffff",
   text: "#0f172a",
   success: "#16a34a",
@@ -56,11 +56,11 @@ function buildModeTokens(rest: Restaurant, mode: "light" | "dark"): ThemeModeTok
   const accent = normalizeHexColor(rest.accentColor, DEFAULTS.accent);
   const background =
     mode === "dark"
-      ? normalizeHexColor(rest.backgroundColor, shiftLightness(DEFAULTS.background, -88))
+      ? normalizeHexColor(rest.backgroundColor, shiftLightness(DEFAULTS.background, -92))
       : normalizeHexColor(rest.backgroundColor, DEFAULTS.background);
   const surface =
     mode === "dark"
-      ? normalizeHexColor(rest.surfaceColor, shiftLightness(DEFAULTS.surface, -88))
+      ? normalizeHexColor(rest.surfaceColor, shiftLightness(DEFAULTS.surface, -90))
       : normalizeHexColor(rest.surfaceColor, DEFAULTS.surface);
   const text =
     mode === "dark"
@@ -69,7 +69,7 @@ function buildModeTokens(rest: Restaurant, mode: "light" | "dark"): ThemeModeTok
   const success = normalizeHexColor(rest.successColor, DEFAULTS.success);
   const warning = normalizeHexColor(rest.warningColor, DEFAULTS.warning);
   const error = normalizeHexColor(rest.errorColor, DEFAULTS.error);
-  const border = mode === "dark" ? shiftLightness(surface, -14) : shiftLightness(surface, -10);
+  const border = mode === "dark" ? shiftLightness(surface, -12) : shiftLightness(surface, -8);
   const ring = primary;
 
   return {
@@ -88,9 +88,9 @@ function buildModeTokens(rest: Restaurant, mode: "light" | "dark"): ThemeModeTok
     },
     gradients: {
       brand: `linear-gradient(135deg, ${primary} 0%, ${accent} 48%, ${secondary} 100%)`,
-      brandSoft: `linear-gradient(135deg, color-mix(in srgb, ${primary} 20%, transparent) 0%, color-mix(in srgb, ${accent} 18%, transparent) 52%, color-mix(in srgb, ${secondary} 16%, transparent) 100%)`,
-      hero: `radial-gradient(circle at top left, color-mix(in srgb, ${primary} 22%, transparent), transparent 32%), radial-gradient(circle at top right, color-mix(in srgb, ${accent} 20%, transparent), transparent 30%), radial-gradient(circle at bottom center, color-mix(in srgb, ${secondary} 14%, transparent), transparent 34%)`,
-      surface: `linear-gradient(180deg, color-mix(in srgb, ${surface} 92%, transparent) 0%, color-mix(in srgb, ${surface} 76%, transparent) 100%)`,
+      brandSoft: `linear-gradient(135deg, color-mix(in srgb, ${primary} 16%, transparent) 0%, color-mix(in srgb, ${accent} 16%, transparent) 52%, color-mix(in srgb, ${secondary} 14%, transparent) 100%)`,
+      hero: `radial-gradient(circle at top left, color-mix(in srgb, ${primary} 16%, transparent), transparent 32%), radial-gradient(circle at top right, color-mix(in srgb, ${accent} 16%, transparent), transparent 30%), radial-gradient(circle at bottom center, color-mix(in srgb, ${secondary} 12%, transparent), transparent 34%)`,
+      surface: `linear-gradient(180deg, color-mix(in srgb, ${surface} 94%, transparent) 0%, color-mix(in srgb, ${surface} 80%, transparent) 100%)`,
     },
     shadows: {
       soft: `0 18px 50px -28px color-mix(in srgb, ${text} 24%, transparent)`,
@@ -120,8 +120,8 @@ function buildCssVars(tokens: ThemeModeTokens, rest: Restaurant, registry = THEM
     "--primary-foreground": colorToCssHsl(modeAwareText(tokens.colors.primary, tokens.colors.background)),
     "--secondary": colorToCssHsl(tokens.colors.secondary),
     "--secondary-foreground": colorToCssHsl(modeAwareText(tokens.colors.secondary, tokens.colors.background)),
-    "--muted": colorToCssHsl(tokens.colors.surface),
-    "--muted-foreground": colorToCssHsl(shiftLightness(tokens.colors.text, 20)),
+    "--muted": colorToCssHsl(shiftLightness(tokens.colors.surface, -2)),
+    "--muted-foreground": colorToCssHsl(shiftLightness(tokens.colors.text, 22)),
     "--accent": colorToCssHsl(tokens.colors.accent),
     "--accent-foreground": colorToCssHsl(modeAwareText(tokens.colors.accent, tokens.colors.background)),
     "--destructive": colorToCssHsl(tokens.colors.error),

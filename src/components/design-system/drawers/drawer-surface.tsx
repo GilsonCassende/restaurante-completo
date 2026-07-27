@@ -8,7 +8,7 @@ export function DrawerSurface({ className, side = "bottom", children, ...props }
   return (
     <div
       className={cn(
-        "rounded-t-3xl border border-border/70 bg-card p-5 shadow-[var(--shadow-card)]",
+        "max-h-[90vh] overflow-y-auto rounded-t-3xl border border-border/70 bg-card p-5 shadow-[var(--shadow-card)] backdrop-blur",
         side === "right" ? "rounded-t-none rounded-l-3xl" : "",
         className
       )}

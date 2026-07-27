@@ -22,7 +22,7 @@ export function CartView({ restaurantId, restaurantName }: CartViewProps) {
 
   return (
     <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_320px]">
-      <Card className="border-border/70 bg-card/90 shadow-sm backdrop-blur">
+      <Card className="border-border/70 bg-gradient-to-br from-card via-card to-muted/20 shadow-[var(--shadow-soft)] backdrop-blur">
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             <ShoppingBag className="h-5 w-5" />
@@ -65,7 +65,7 @@ export function CartView({ restaurantId, restaurantName }: CartViewProps) {
         </CardContent>
       </Card>
 
-      <Card className="border-border/70 bg-card/90 shadow-sm backdrop-blur">
+      <Card className="border-border/70 bg-gradient-to-br from-card via-card to-muted/20 shadow-[var(--shadow-soft)] backdrop-blur">
         <CardHeader>
           <CardTitle>Resumo</CardTitle>
           <CardDescription>Subtotal, total e navegação para o checkout.</CardDescription>

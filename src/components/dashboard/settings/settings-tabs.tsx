@@ -17,7 +17,7 @@ type SettingsTabsProps = {
 
 export function SettingsTabs({ value, onValueChange, tabs }: SettingsTabsProps) {
   return (
-    <div className="rounded-[1.75rem] border border-border/70 bg-card/90 p-2 shadow-[var(--shadow-soft)]">
+    <div className="rounded-[1.75rem] border border-border/70 bg-gradient-to-br from-card via-card to-muted/20 p-2 shadow-[var(--shadow-soft)]">
       <div className="grid gap-2 md:grid-cols-2 xl:grid-cols-3">
         {tabs.map((tab) => {
           const active = tab.id === value;
@@ -26,7 +26,10 @@ export function SettingsTabs({ value, onValueChange, tabs }: SettingsTabsProps) 
               key={tab.id}
               type="button"
               variant={active ? "default" : "ghost"}
-              className={cn("h-auto justify-start rounded-[1.25rem] px-4 py-3 text-left", !active && "bg-transparent")}
+              className={cn(
+                "h-auto justify-start rounded-[1.25rem] px-4 py-3 text-left transition-all duration-200",
+                active ? "shadow-[var(--shadow-soft)]" : "bg-transparent text-muted-foreground"
+              )}
               onClick={() => onValueChange(tab.id)}
             >
               <span className="flex flex-col items-start gap-1">
@@ -42,4 +45,3 @@ export function SettingsTabs({ value, onValueChange, tabs }: SettingsTabsProps) 
     </div>
   );
 }
-

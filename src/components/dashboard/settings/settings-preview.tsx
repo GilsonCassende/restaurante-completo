@@ -31,7 +31,7 @@ export function SettingsPreview({ restaurant, draft }: SettingsPreviewProps) {
         <div className="flex items-start justify-between gap-4">
           <div className="space-y-2">
             <p className="text-xs uppercase tracking-[0.24em] text-muted-foreground">Identidade ativa</p>
-            <h3 className="text-2xl font-semibold">{draft.name}</h3>
+            <h3 className="font-display text-2xl font-semibold">{draft.name}</h3>
             <p className="text-sm leading-6 text-muted-foreground">{draft.slogan || draft.description || restaurant.description || "Branding e dados reais conectados ao banco."}</p>
           </div>
           <Button asChild variant="outline">

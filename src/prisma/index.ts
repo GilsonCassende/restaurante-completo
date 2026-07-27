@@ -172,76 +172,6 @@ function normalizePhone(phone: string) {
   return phone.replace(/\D/g, "");
 }
 
-function mapRestaurantSettingsData(restaurant: Restaurant): RestaurantSettingsUpdateInput {
-  return {
-    name: restaurant.name,
-    logo: restaurant.logo,
-    favicon: restaurant.favicon,
-    banner: restaurant.banner,
-    coverImage: restaurant.coverImage,
-    primaryColor: restaurant.primaryColor,
-    secondaryColor: restaurant.secondaryColor,
-    accentColor: restaurant.accentColor,
-    backgroundColor: restaurant.backgroundColor,
-    surfaceColor: restaurant.surfaceColor,
-    textColor: restaurant.textColor,
-    successColor: restaurant.successColor,
-    warningColor: restaurant.warningColor,
-    errorColor: restaurant.errorColor,
-    fontFamily: restaurant.fontFamily,
-    borderRadius: restaurant.borderRadius,
-    buttonStyle: restaurant.buttonStyle,
-    cardStyle: restaurant.cardStyle,
-    heroStyle: restaurant.heroStyle,
-    footerStyle: restaurant.footerStyle,
-    instagram: restaurant.instagram,
-    facebook: restaurant.facebook,
-    tiktok: restaurant.tiktok,
-    youtube: restaurant.youtube,
-    linkedin: restaurant.linkedin,
-    website: restaurant.website,
-    phone: restaurant.phone,
-    supportPhone: restaurant.supportPhone,
-    whatsapp: restaurant.whatsapp,
-    email: restaurant.email,
-    address: restaurant.address,
-    slogan: restaurant.slogan,
-    history: restaurant.history,
-    mission: restaurant.mission,
-    description: restaurant.description,
-    state: restaurant.state,
-    neighborhood: restaurant.neighborhood,
-    street: restaurant.street,
-    number: restaurant.number,
-    postalCode: restaurant.postalCode,
-    latitude: restaurant.latitude,
-    longitude: restaurant.longitude,
-    openingHours: restaurant.openingHours,
-    timezone: restaurant.timezone,
-    currency: restaurant.currency,
-    language: restaurant.language,
-    country: restaurant.country,
-    city: restaurant.city,
-    weeklyHours: restaurant.weeklyHours,
-    holidays: restaurant.holidays,
-    isOpen: restaurant.isOpen,
-    minimumOrderAmount: restaurant.minimumOrderAmount,
-    deliveryFee: restaurant.deliveryFee,
-    deliveryRadiusKm: restaurant.deliveryRadiusKm,
-    averagePreparationTime: restaurant.averagePreparationTime,
-    seoTitle: restaurant.seoTitle,
-    seoDescription: restaurant.seoDescription,
-    seoKeywords: restaurant.seoKeywords,
-    ogImage: restaurant.ogImage,
-    twitterTitle: restaurant.twitterTitle,
-    twitterDescription: restaurant.twitterDescription,
-    twitterImage: restaurant.twitterImage,
-    integrations: restaurant.integrations,
-    subscriptionPlan: restaurant.subscriptionPlan,
-    active: restaurant.active,
-  };
-}
-
 function normalizeRestaurantRecord(restaurant: unknown): Restaurant {
   const record = restaurant as Record<string, unknown>;
   const weeklyHours = Array.isArray(record.weeklyHours) ? (record.weeklyHours as Restaurant["weeklyHours"]) : null;
@@ -1032,39 +962,35 @@ class PrismaDataRepository implements AuthRepository, CatalogRepository {
     if (env.NODE_ENV === "production") return;
 
     const seed = buildDevelopmentSeed();
-    const [platformRestaurant, restaurant] = await Promise.all([
-      prisma.restaurant.upsert({
+    const [existingPlatformRestaurant, existingRestaurant] = await Promise.all([
+      prisma.restaurant.findUnique({
         where: { slug: seed.platformRestaurant.slug },
-        update: mapRestaurantSettingsData(seed.platformRestaurant),
-        create: seed.platformRestaurant,
       }),
-      prisma.restaurant.upsert({
+      prisma.restaurant.findUnique({
         where: { slug: seed.restaurant.slug },
-        update: mapRestaurantSettingsData(seed.restaurant),
-        create: seed.restaurant,
       }),
     ]);
 
+    const platformRestaurant =
+      existingPlatformRestaurant ?? (await prisma.restaurant.create({ data: seed.platformRestaurant }));
+    const restaurant = existingRestaurant ?? (await prisma.restaurant.create({ data: seed.restaurant }));
+
     await Promise.all(
-      seed.users.map((user) =>
-        prisma.user.upsert({
-          where: { email: user.email },
-          update: {
-            name: user.name,
-            password: user.password,
-            image: user.image,
-            role: user.role,
-            active: user.active,
+      seed.users.map(async (userSeed) => {
+        const existingUser = await prisma.user.findUnique({
+          where: { email: userSeed.email },
+        });
+
+        if (existingUser) return;
+
+        await prisma.user.create({
+          data: {
+            ...userSeed,
             restaurantId:
-              user.role === ROLES.SUPER_ADMIN ? platformRestaurant.id : restaurant.id,
+              userSeed.role === ROLES.SUPER_ADMIN ? platformRestaurant.id : restaurant.id,
           },
-          create: {
-            ...user,
-            restaurantId:
-              user.role === ROLES.SUPER_ADMIN ? platformRestaurant.id : restaurant.id,
-          },
-        })
-      )
+        });
+      })
     );
 
     await Promise.all(
@@ -1076,19 +1002,7 @@ class PrismaDataRepository implements AuthRepository, CatalogRepository {
           },
         });
 
-        if (existing) {
-          await prisma.category.update({
-            where: { id: existing.id },
-            data: {
-              name: category.name,
-              description: category.description,
-              image: category.image,
-              active: category.active,
-              sortOrder: category.sortOrder,
-            },
-          });
-          return;
-        }
+        if (existing) return;
 
         await prisma.category.create({ data: category });
       })
@@ -1103,23 +1017,7 @@ class PrismaDataRepository implements AuthRepository, CatalogRepository {
           },
         });
 
-        if (existing) {
-          await prisma.product.update({
-            where: { id: existing.id },
-            data: {
-              categoryId: product.categoryId,
-              name: product.name,
-              description: product.description,
-              image: product.image,
-              price: product.price,
-              promotionalPrice: product.promotionalPrice,
-              active: product.active,
-              featured: product.featured,
-              preparationTime: product.preparationTime,
-            },
-          });
-          return;
-        }
+        if (existing) return;
 
         await prisma.product.create({ data: product });
       })
@@ -1134,16 +1032,7 @@ class PrismaDataRepository implements AuthRepository, CatalogRepository {
           },
         });
 
-        if (existing) {
-          await prisma.table.update({
-            where: { id: existing.id },
-            data: {
-              qrCode: table.qrCode,
-              active: table.active,
-            },
-          });
-          return;
-        }
+        if (existing) return;
 
         await prisma.table.create({ data: table });
       })
@@ -1761,16 +1650,10 @@ class PrismaDataRepository implements AuthRepository, CatalogRepository {
   }
 }
 
-declare global {
-  // Reuse the in-memory repository across Next.js dev bundles so auth/session lookups
-  // see the same seeded data during local testing without DATABASE_URL.
-  // eslint-disable-next-line no-var
-  var __restaurantProMemoryRepository: MemoryDataRepository | undefined;
-}
-
-const repository: AuthRepository & CatalogRepository = env.DATABASE_URL
-  ? new PrismaDataRepository()
-  : (globalThis.__restaurantProMemoryRepository ??= new MemoryDataRepository());
+const repository: AuthRepository & CatalogRepository =
+  process.env.CODEX_CI === "1" || env.NODE_ENV === "test" || !env.DATABASE_URL
+    ? new MemoryDataRepository()
+    : new PrismaDataRepository();
 
 export { prisma };
 

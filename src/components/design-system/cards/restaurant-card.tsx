@@ -13,10 +13,10 @@ type RestaurantCardProps = {
 
 export function RestaurantCard({ name, subtitle, status, description, logo, className }: RestaurantCardProps) {
   return (
-    <Card className={cn("overflow-hidden border-border/70 bg-gradient-to-br from-card to-muted/30 shadow-[var(--shadow-card)]", className)}>
+    <Card className={cn("overflow-hidden border-border/70 bg-gradient-to-br from-card via-card to-muted/20 shadow-[var(--shadow-card)] transition-all duration-200 hover:-translate-y-0.5 hover:shadow-[var(--shadow-card)]", className)}>
       <CardHeader className="flex-row items-start justify-between gap-4">
         <div className="flex items-center gap-4">
-          <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-primary/15 to-primary/5 text-primary">
+          <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-primary/15 to-primary/5 text-primary shadow-[var(--shadow-soft)]">
             {logo ?? <span className="text-lg font-semibold">{name.slice(0, 1)}</span>}
           </div>
           <div>

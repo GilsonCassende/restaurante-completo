@@ -57,7 +57,7 @@ function ProductVisual({ product }: { product: LandingProduct }) {
 
   return (
     <div className="flex h-56 w-full items-end bg-[image:var(--gradient-brand-soft)] p-5">
-      <div className="w-full rounded-[1.25rem] border border-white/50 bg-background/70 p-4 backdrop-blur">
+      <div className="w-full rounded-[1.25rem] border border-border/60 bg-background/70 p-4 backdrop-blur">
         <div className="flex items-center gap-3">
           <span className="flex h-11 w-11 items-center justify-center rounded-2xl bg-primary/10 text-primary">
             <ImageOff className="h-5 w-5" />

@@ -42,7 +42,7 @@ export function MenuView({ restaurantId, restaurantName, categories, products }:
   return (
     <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_320px]">
       <div className="space-y-6">
-        <Card className="border-border/70 bg-card/90 shadow-sm backdrop-blur">
+        <Card className="border-border/70 bg-gradient-to-br from-card via-card to-muted/20 shadow-[var(--shadow-soft)] backdrop-blur">
           <CardHeader>
             <div className="flex flex-wrap items-center justify-between gap-3">
               <div>
@@ -73,7 +73,7 @@ export function MenuView({ restaurantId, restaurantName, categories, products }:
 
         <div className="grid gap-4 md:grid-cols-2">
           {visibleProducts.length === 0 ? (
-            <Card className="border-border/70 bg-card/90 shadow-sm backdrop-blur md:col-span-2">
+            <Card className="border-border/70 bg-gradient-to-br from-card via-card to-muted/20 shadow-[var(--shadow-soft)] backdrop-blur md:col-span-2">
               <CardContent className="p-6 text-sm text-muted-foreground">
                 Nenhum produto ativo encontrado para a categoria selecionada.
               </CardContent>
@@ -84,7 +84,7 @@ export function MenuView({ restaurantId, restaurantName, categories, products }:
               const unitPrice = product.promotionalPrice ?? product.price;
 
               return (
-                <Card key={product.id} className="border-border/70 bg-card/90 shadow-sm backdrop-blur">
+                <Card key={product.id} className="border-border/70 bg-gradient-to-br from-card via-card to-muted/20 shadow-[var(--shadow-soft)] backdrop-blur">
                   <CardHeader className="space-y-3">
                     <div className="flex items-start justify-between gap-3">
                       <div className="space-y-1">
@@ -115,7 +115,7 @@ export function MenuView({ restaurantId, restaurantName, categories, products }:
       </div>
 
       <aside className="lg:sticky lg:top-24">
-        <Card className="border-border/70 bg-card/90 shadow-sm backdrop-blur">
+        <Card className="border-border/70 bg-gradient-to-br from-card via-card to-muted/20 shadow-[var(--shadow-soft)] backdrop-blur">
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
               <ShoppingCart className="h-5 w-5" />

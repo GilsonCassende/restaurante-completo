@@ -48,7 +48,7 @@ function GalleryTile({ item }: { item: LandingGalleryItem }) {
           />
         ) : (
           <div className="flex h-72 w-full items-center justify-center bg-[image:var(--gradient-brand-soft)]">
-            <div className="flex max-w-[18rem] flex-col items-center gap-4 rounded-[1.5rem] border border-white/50 bg-background/70 p-6 text-center backdrop-blur">
+            <div className="flex max-w-[18rem] flex-col items-center gap-4 rounded-[1.5rem] border border-border/60 bg-background/70 p-6 text-center backdrop-blur">
               <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-primary/10 text-primary">
                 <ImageOff className="h-5 w-5" />
               </span>
@@ -112,7 +112,7 @@ export function PremiumLandingProof({ gallery, contact, restaurant }: PremiumLan
                   />
                 ) : (
                   <div className="flex h-[22rem] w-full items-center justify-center bg-[image:var(--gradient-brand-soft)]">
-                    <div className="rounded-[1.5rem] border border-white/50 bg-background/70 px-6 py-5 text-center backdrop-blur">
+                    <div className="rounded-[1.5rem] border border-border/60 bg-background/70 px-6 py-5 text-center backdrop-blur">
                       <MapPin className="mx-auto h-6 w-6 text-primary" />
                       <p className="mt-3 text-sm font-semibold">Mapa indisponível</p>
                       <p className="mt-1 text-xs text-muted-foreground">Endereço ainda não cadastrado.</p>

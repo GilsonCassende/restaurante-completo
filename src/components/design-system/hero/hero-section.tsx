@@ -43,7 +43,7 @@ export function HeroSection({ eyebrow, title, subtitle, primaryAction, secondary
         {metrics?.length ? (
           <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
             {metrics.map((metric) => (
-              <div key={metric.label} className="rounded-3xl border border-white/50 bg-white/55 p-4 shadow-[var(--shadow-soft)] backdrop-blur">
+              <div key={metric.label} className="rounded-3xl border border-border/70 bg-card/85 p-4 shadow-[var(--shadow-soft)] backdrop-blur">
                 <p className="text-xs font-semibold uppercase tracking-[0.2em] text-muted-foreground">{metric.label}</p>
                 <p className="mt-3 text-3xl font-semibold tracking-tight">
                   <AnimatedCounter value={metric.value} suffix={metric.suffix} />

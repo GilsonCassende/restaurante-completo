@@ -21,11 +21,11 @@ export default async function LoginPage({ searchParams }: LoginPageProps) {
   return (
     <div className="flex min-h-screen items-center justify-center px-4 py-12">
       <div className="grid w-full max-w-5xl gap-8 lg:grid-cols-[1.2fr_0.8fr]">
-        <section className="flex flex-col justify-center rounded-[2rem] border border-border/60 bg-card/60 p-8 shadow-soft backdrop-blur">
+        <section className="flex flex-col justify-center rounded-[2rem] border border-border/60 bg-gradient-to-br from-card via-card to-muted/20 p-8 shadow-[var(--shadow-soft)] backdrop-blur">
           <p className="text-sm font-medium uppercase tracking-[0.35em] text-muted-foreground">
             {APP_CONFIG.name}
           </p>
-          <h1 className="mt-4 text-4xl font-semibold tracking-tight">
+          <h1 className="mt-4 font-display text-4xl font-semibold tracking-tight text-balance">
             Infraestrutura de acesso pronta para escalar.
           </h1>
           <p className="mt-4 max-w-xl text-sm leading-6 text-muted-foreground">

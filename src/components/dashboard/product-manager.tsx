@@ -5,6 +5,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { PencilLine, Plus, Trash2 } from "lucide-react";
 import { createProductAction, deleteProductAction, updateProductAction } from "@/actions/product";
+import { ConfirmationDialog } from "@/components/design-system/dialogs";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -48,6 +49,7 @@ function formatDate(value: Date) {
 export function ProductManager({ products, categories }: ProductManagerProps) {
   const router = useRouter();
   const [editingProduct, setEditingProduct] = useState<Product | null>(null);
+  const [deleteTarget, setDeleteTarget] = useState<Product | null>(null);
   const [message, setMessage] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const categoriesById = useMemo(() => new Map(categories.map((category) => [category.id, category])), [categories]);
@@ -97,26 +99,31 @@ export function ProductManager({ products, categories }: ProductManagerProps) {
     }
   });
 
-  const handleDelete = (id: string) => {
-    if (!window.confirm("Deseja excluir este produto?")) {
+  const handleDelete = (product: Product) => {
+    setDeleteTarget(product);
+  };
+
+  const confirmDelete = () => {
+    if (!deleteTarget) {
       return;
     }
 
     setMessage("");
     setIsSubmitting(true);
     void (async () => {
-      const result = await deleteProductAction({ id });
+      const result = await deleteProductAction({ id: deleteTarget.id });
       if (!result.ok) {
         setMessage(result.message);
         setIsSubmitting(false);
         return;
       }
 
-      if (editingProduct?.id === id) {
+      if (editingProduct?.id === deleteTarget.id) {
         setEditingProduct(null);
       }
 
       setMessage("Produto removido com sucesso.");
+      setDeleteTarget(null);
       router.refresh();
       setIsSubmitting(false);
     })();
@@ -124,7 +131,7 @@ export function ProductManager({ products, categories }: ProductManagerProps) {
 
   return (
     <div className="grid gap-6 xl:grid-cols-[420px_minmax(0,1fr)]">
-      <Card className="border-border/70 bg-card/90 shadow-sm backdrop-blur">
+      <Card className="border-border/70 bg-gradient-to-br from-card via-card to-muted/20 shadow-[var(--shadow-soft)] backdrop-blur">
         <CardHeader>
           <CardTitle>{editingProduct ? "Editar produto" : "Novo produto"}</CardTitle>
           <CardDescription>
@@ -140,6 +147,7 @@ export function ProductManager({ products, categories }: ProductManagerProps) {
               <select
                 id="product-category"
                 className="flex h-10 w-full rounded-xl border border-input bg-background px-3 py-2 text-sm"
+                disabled={isSubmitting}
                 {...form.register("categoryId")}
               >
                 <option value="">Selecione uma categoria</option>
@@ -157,19 +165,19 @@ export function ProductManager({ products, categories }: ProductManagerProps) {
               <label htmlFor="product-name" className="text-sm font-medium">
                 Nome
               </label>
-              <Input id="product-name" {...form.register("name")} placeholder="Frango grelhado" />
+              <Input id="product-name" {...form.register("name")} placeholder="Frango grelhado" disabled={isSubmitting} />
             </div>
             <div className="space-y-2">
               <label htmlFor="product-description" className="text-sm font-medium">
                 Descrição
               </label>
-              <Textarea id="product-description" {...form.register("description")} placeholder="Detalhes do item." />
+              <Textarea id="product-description" {...form.register("description")} placeholder="Detalhes do item." disabled={isSubmitting} />
             </div>
             <div className="space-y-2">
               <label htmlFor="product-image" className="text-sm font-medium">
                 Imagem do produto
               </label>
-              <Input id="product-image" {...form.register("image")} placeholder="https://..." />
+              <Input id="product-image" {...form.register("image")} placeholder="https://..." disabled={isSubmitting} />
               <p className="text-xs text-muted-foreground">Campo preparado para upload futuro de imagens.</p>
             </div>
             <div className="grid grid-cols-2 gap-3">
@@ -177,7 +185,7 @@ export function ProductManager({ products, categories }: ProductManagerProps) {
                 <label htmlFor="product-price" className="text-sm font-medium">
                   Preço
                 </label>
-                <Input id="product-price" type="number" min={0} step="1" {...form.register("price", { valueAsNumber: true })} />
+                <Input id="product-price" type="number" min={0} step="1" {...form.register("price", { valueAsNumber: true })} disabled={isSubmitting} />
               </div>
               <div className="space-y-2">
                 <label htmlFor="product-promo" className="text-sm font-medium">
@@ -188,6 +196,7 @@ export function ProductManager({ products, categories }: ProductManagerProps) {
                   type="number"
                   min={0}
                   step="1"
+                  disabled={isSubmitting}
                   {...form.register("promotionalPrice", {
                     setValueAs: (value) => (value === "" ? undefined : Number(value)),
                   })}
@@ -204,6 +213,7 @@ export function ProductManager({ products, categories }: ProductManagerProps) {
                   type="number"
                   min={1}
                   step="1"
+                  disabled={isSubmitting}
                   {...form.register("preparationTime", {
                     setValueAs: (value) => (value === "" ? undefined : Number(value)),
                   })}
@@ -220,9 +230,9 @@ export function ProductManager({ products, categories }: ProductManagerProps) {
                 </label>
               </div>
             </div>
-            {message ? <p className="rounded-xl bg-muted px-3 py-2 text-sm text-muted-foreground">{message}</p> : null}
+            {message ? <p role="status" className="rounded-xl bg-muted px-3 py-2 text-sm text-muted-foreground">{message}</p> : null}
             <div className="flex gap-3">
-              <Button type="submit" className="flex-1" disabled={isSubmitting}>
+              <Button type="submit" className="flex-1" loading={isSubmitting}>
                 <Plus className="h-4 w-4" />
                 {editingProduct ? "Salvar alterações" : "Criar produto"}
               </Button>
@@ -236,7 +246,7 @@ export function ProductManager({ products, categories }: ProductManagerProps) {
         </CardContent>
       </Card>
 
-      <Card className="border-border/70 bg-card/90 shadow-sm backdrop-blur">
+      <Card className="border-border/70 bg-gradient-to-br from-card via-card to-muted/20 shadow-[var(--shadow-soft)] backdrop-blur">
         <CardHeader>
           <div className="flex flex-wrap items-center justify-between gap-3">
             <div>
@@ -286,11 +296,11 @@ export function ProductManager({ products, categories }: ProductManagerProps) {
                         <PencilLine className="h-4 w-4" />
                         Editar
                       </Button>
-                      <Button variant="outline" size="sm" onClick={() => handleDelete(product.id)} disabled={isSubmitting}>
-                        <Trash2 className="h-4 w-4" />
-                        Excluir
-                      </Button>
-                    </div>
+                    <Button variant="outline" size="sm" onClick={() => handleDelete(product)} disabled={isSubmitting}>
+                      <Trash2 className="h-4 w-4" />
+                      Excluir
+                    </Button>
+                  </div>
                   </div>
                   <div className={cn("mt-3 flex flex-wrap gap-3 text-xs text-muted-foreground")}>
                     <span>Preparo {product.preparationTime ? `${product.preparationTime} min` : "não informado"}</span>
@@ -303,6 +313,22 @@ export function ProductManager({ products, categories }: ProductManagerProps) {
           )}
         </CardContent>
       </Card>
+
+      <ConfirmationDialog
+        open={Boolean(deleteTarget)}
+        title="Excluir produto"
+        description={
+          deleteTarget
+            ? `O produto "${deleteTarget.name}" será removido do catálogo. Se houver pedidos vinculados, o histórico permanece preservado.`
+            : ""
+        }
+        confirmLabel="Excluir produto"
+        cancelLabel="Manter produto"
+        intent="destructive"
+        loading={isSubmitting}
+        onConfirm={confirmDelete}
+        onCancel={() => setDeleteTarget(null)}
+      />
     </div>
   );
 }

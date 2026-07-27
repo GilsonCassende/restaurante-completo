@@ -6,5 +6,5 @@ type SectionTitleProps = {
 };
 
 export function SectionTitle({ title, className }: SectionTitleProps) {
-  return <h2 className={cn("text-2xl font-semibold tracking-tight md:text-3xl", className)}>{title}</h2>;
+  return <h2 className={cn("font-display text-2xl font-semibold tracking-tight text-balance md:text-3xl", className)}>{title}</h2>;
 }

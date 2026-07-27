@@ -94,7 +94,7 @@ export function CheckoutForm({ restaurantId, restaurantName, restaurantPhone, ta
 
   return (
     <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_320px]">
-      <Card className="border-border/70 bg-card/90 shadow-sm backdrop-blur">
+      <Card className="border-border/70 bg-gradient-to-br from-card via-card to-muted/20 shadow-[var(--shadow-soft)] backdrop-blur">
         <CardHeader>
           <CardTitle>Checkout</CardTitle>
           <CardDescription>
@@ -108,7 +108,7 @@ export function CheckoutForm({ restaurantId, restaurantName, restaurantPhone, ta
                 <label htmlFor="checkout-name" className="text-sm font-medium">
                   Nome
                 </label>
-                <Input id="checkout-name" {...form.register("customerName")} placeholder="Nome do cliente" />
+                <Input id="checkout-name" {...form.register("customerName")} placeholder="Nome do cliente" disabled={isSubmitting} />
                 {form.formState.errors.customerName ? (
                   <p className="text-xs text-destructive">{form.formState.errors.customerName.message}</p>
                 ) : null}
@@ -117,7 +117,7 @@ export function CheckoutForm({ restaurantId, restaurantName, restaurantPhone, ta
                 <label htmlFor="checkout-phone" className="text-sm font-medium">
                   Telefone
                 </label>
-                <Input id="checkout-phone" {...form.register("customerPhone")} placeholder="+244..." />
+                <Input id="checkout-phone" {...form.register("customerPhone")} placeholder="+244..." disabled={isSubmitting} />
                 {form.formState.errors.customerPhone ? (
                   <p className="text-xs text-destructive">{form.formState.errors.customerPhone.message}</p>
                 ) : null}
@@ -131,6 +131,7 @@ export function CheckoutForm({ restaurantId, restaurantName, restaurantPhone, ta
               <select
                 id="checkout-table"
                 className="flex h-10 w-full rounded-xl border border-input bg-background px-3 py-2 text-sm"
+                disabled={isSubmitting}
                 {...form.register("tableId")}
               >
                 <option value="">Selecione a mesa</option>
@@ -149,13 +150,13 @@ export function CheckoutForm({ restaurantId, restaurantName, restaurantPhone, ta
               <label htmlFor="checkout-notes" className="text-sm font-medium">
                 Observações
               </label>
-              <Textarea id="checkout-notes" {...form.register("notes")} placeholder="Sem cebola, extra molho..." />
+              <Textarea id="checkout-notes" {...form.register("notes")} placeholder="Sem cebola, extra molho..." disabled={isSubmitting} />
             </div>
 
-            {message ? <p className="rounded-xl bg-muted px-3 py-2 text-sm text-muted-foreground">{message}</p> : null}
+            {message ? <p role="status" className="rounded-xl bg-muted px-3 py-2 text-sm text-muted-foreground">{message}</p> : null}
 
             <div className="flex flex-wrap gap-3">
-              <Button type="submit" className="flex-1" disabled={isSubmitting || cart.quantity === 0}>
+              <Button type="submit" className="flex-1" loading={isSubmitting} disabled={cart.quantity === 0}>
                 <Send className="h-4 w-4" />
                 Criar pedido
               </Button>
@@ -167,7 +168,7 @@ export function CheckoutForm({ restaurantId, restaurantName, restaurantPhone, ta
         </CardContent>
       </Card>
 
-      <Card className="border-border/70 bg-card/90 shadow-sm backdrop-blur">
+      <Card className="border-border/70 bg-gradient-to-br from-card via-card to-muted/20 shadow-[var(--shadow-soft)] backdrop-blur">
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             <MessageSquareText className="h-5 w-5" />

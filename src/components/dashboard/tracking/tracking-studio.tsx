@@ -31,15 +31,15 @@ export function TrackingStudio({ dashboard }: TrackingStudioProps) {
               <div className="relative space-y-4">
                 <Badge variant="secondary">{dashboard.settings.mapProvider}</Badge>
                 <div className="grid gap-4 sm:grid-cols-3">
-                  <div className="rounded-2xl bg-card/90 p-4 shadow-sm">
+                  <div className="rounded-2xl bg-card/90 p-4 shadow-[var(--shadow-soft)]">
                     <p className="text-xs uppercase tracking-[0.2em] text-muted-foreground">Rota ativa</p>
                     <p className="mt-2 font-semibold">{activeRoute ? `${activeRoute.distanceKm} km` : "Sem rota"}</p>
                   </div>
-                  <div className="rounded-2xl bg-card/90 p-4 shadow-sm">
+                  <div className="rounded-2xl bg-card/90 p-4 shadow-[var(--shadow-soft)]">
                     <p className="text-xs uppercase tracking-[0.2em] text-muted-foreground">ETA</p>
                     <p className="mt-2 font-semibold">{activeRoute?.etaAt ? activeRoute.etaAt.toLocaleTimeString("pt-AO") : "N/D"}</p>
                   </div>
-                  <div className="rounded-2xl bg-card/90 p-4 shadow-sm">
+                  <div className="rounded-2xl bg-card/90 p-4 shadow-[var(--shadow-soft)]">
                     <p className="text-xs uppercase tracking-[0.2em] text-muted-foreground">Localização</p>
                     <p className="mt-2 font-semibold">{liveEvent?.latitude?.toFixed(4) ?? "-"}, {liveEvent?.longitude?.toFixed(4) ?? "-"}</p>
                   </div>

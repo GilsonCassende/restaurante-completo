@@ -3,7 +3,7 @@ import type { ThemeMode } from "@/types";
 
 export type ThemePresetKey = "inter" | "plus-jakarta" | "dm-sans" | "space-grotesk" | "sora" | "fraunces";
 export type ThemeRadiusKey = "sm" | "md" | "lg" | "xl" | "2xl" | "pill";
-export type ThemeStyleKey = "solid" | "gradient" | "outline" | "glass" | "minimal" | "editorial" | "simple" | "rich";
+export type ThemeStyleKey = "solid" | "gradient" | "outline" | "flat" | "glass" | "soft" | "minimal" | "editorial" | "simple" | "rich" | "immersive" | "split";
 
 export type ThemeRegistryItem = {
   label: string;
@@ -83,4 +83,3 @@ export type ThemeTokens = {
 export type ThemeProviderValue = ThemeTokens & {
   children?: ReactNode;
 };
-

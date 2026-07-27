@@ -1,5 +1,5 @@
 import bcrypt from "bcrypt";
-import { randomUUID } from "node:crypto";
+import { ObjectId } from "mongodb";
 import { buildQrCodeDataUrl } from "@/lib/qr";
 import { ROLES } from "@/permissions";
 import type { Category, Product, Restaurant, Role, Table, User } from "@/types";
@@ -11,7 +11,7 @@ function now() {
 }
 
 function createId() {
-  return randomUUID().replace(/-/g, "");
+  return new ObjectId().toHexString();
 }
 
 function createRestaurant(data: {

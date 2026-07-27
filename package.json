@@ -6,7 +6,7 @@
     "node": ">=22"
   },
   "prisma": {
-    "seed": "jiti prisma/seed.ts"
+    "seed": "./node_modules/.bin/jiti prisma/seed.ts"
   },
   "scripts": {
     "dev": "next dev",

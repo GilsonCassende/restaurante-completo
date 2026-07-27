@@ -67,7 +67,7 @@ export function OrderHistory({ restaurantName, orders }: OrderHistoryProps) {
 
   return (
     <div className="space-y-6">
-      <Card className="border-border/70 bg-card/90 shadow-sm backdrop-blur">
+      <Card className="border-border/70 bg-gradient-to-br from-card via-card to-muted/20 shadow-[var(--shadow-soft)] backdrop-blur">
         <CardHeader>
           <CardTitle>Histórico de pedidos</CardTitle>
           <CardDescription>{restaurantName}</CardDescription>
@@ -78,7 +78,7 @@ export function OrderHistory({ restaurantName, orders }: OrderHistoryProps) {
       </Card>
 
       {orders.length === 0 ? (
-        <Card className="border-border/70 bg-card/90 shadow-sm backdrop-blur">
+        <Card className="border-border/70 bg-gradient-to-br from-card via-card to-muted/20 shadow-[var(--shadow-soft)] backdrop-blur">
           <CardContent className="p-6 text-sm text-muted-foreground">
             Ainda não existem pedidos para este restaurante.
           </CardContent>
@@ -90,7 +90,7 @@ export function OrderHistory({ restaurantName, orders }: OrderHistoryProps) {
             const Icon = status.icon;
 
             return (
-              <Card key={order.id} className="border-border/70 bg-card/90 shadow-sm backdrop-blur">
+              <Card key={order.id} className="border-border/70 bg-gradient-to-br from-card via-card to-muted/20 shadow-[var(--shadow-soft)] backdrop-blur">
                 <CardHeader>
                   <div className="flex flex-wrap items-start justify-between gap-3">
                     <div className="space-y-2">

@@ -15,9 +15,10 @@ export function SettingsSwitch({ checked, onCheckedChange, label, description }:
       type="button"
       role="switch"
       aria-checked={checked}
+      aria-label={label}
       onClick={() => onCheckedChange(!checked)}
       className={cn(
-        "flex w-full items-center justify-between gap-4 rounded-[1.25rem] border border-border/70 bg-background/80 p-4 text-left transition-colors",
+        "flex w-full items-center justify-between gap-4 rounded-[1.25rem] border border-border/70 bg-background/80 p-4 text-left transition-all duration-200 hover:-translate-y-0.5 hover:border-primary/30 hover:shadow-[var(--shadow-soft)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background",
         checked && "border-primary/40 bg-primary/5"
       )}
     >
@@ -33,7 +34,7 @@ export function SettingsSwitch({ checked, onCheckedChange, label, description }:
       >
         <span
           className={cn(
-            "inline-block h-5 w-5 rounded-full bg-background shadow-sm transition-transform",
+            "inline-block h-5 w-5 rounded-full bg-background shadow-sm transition-transform duration-200",
             checked ? "translate-x-5" : "translate-x-0.5"
           )}
         />
@@ -41,4 +42,3 @@ export function SettingsSwitch({ checked, onCheckedChange, label, description }:
     </button>
   );
 }
-

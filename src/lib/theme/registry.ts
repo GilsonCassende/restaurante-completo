@@ -38,8 +38,8 @@ export const THEME_REGISTRY: ThemeRegistry = {
   buttonStyles: {
     solid: {
       label: "Solid",
-      description: "Botão premium com cor forte e leitura clara.",
-      className: "shadow-[0_16px_36px_-20px_hsl(var(--primary)/0.5)]",
+      description: "Botão premium com presença equilibrada e leitura clara.",
+      className: "shadow-[var(--shadow-soft)]",
     },
     gradient: {
       label: "Gradient",
@@ -49,19 +49,19 @@ export const THEME_REGISTRY: ThemeRegistry = {
     outline: {
       label: "Outline",
       description: "Visual leve para contextos mais editoriais.",
-      className: "border border-border bg-background text-foreground",
+      className: "border border-border/80 bg-background/80 text-foreground",
     },
   },
   cardStyles: {
     flat: {
       label: "Flat",
       description: "Cards mais limpos e diretos.",
-      className: "border border-border/70 bg-card",
+      className: "border border-border/70 bg-card shadow-[var(--shadow-soft)]",
     },
     glass: {
       label: "Glass",
       description: "Camada translúcida com profundidade.",
-      className: "border border-border/70 bg-card/80 backdrop-blur-xl",
+      className: "border border-border/70 bg-card/78 backdrop-blur-xl shadow-[var(--shadow-card)]",
     },
     soft: {
       label: "Soft",

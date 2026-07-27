@@ -12,7 +12,7 @@ type HoverCardProps = React.PropsWithChildren<{
 export function HoverCard({ className, children }: HoverCardProps) {
   return (
     <motion.div
-      className={cn("rounded-3xl border border-border/70 bg-card/90 shadow-[var(--shadow-soft)]", className)}
+      className={cn("rounded-[1.75rem] border border-border/70 bg-gradient-to-br from-card via-card to-muted/20 shadow-[var(--shadow-soft)]", className)}
       initial="rest"
       whileHover="hover"
       whileTap="tap"

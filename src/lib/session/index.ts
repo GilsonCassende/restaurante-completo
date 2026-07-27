@@ -1,6 +1,6 @@
 import { cache } from "react";
 import { redirect } from "next/navigation";
-import { headers } from "next/headers";
+import { auth } from "@/auth";
 import { ROLES, hasRoleAccess } from "@/permissions";
 import { findRestaurantById, findUserById } from "@/prisma";
 import { recordPermissionEvent } from "@/lib/production";
@@ -11,19 +11,7 @@ export type CurrentUserWithRestaurant = User & {
 };
 
 export const getCurrentSession = cache(async () => {
-  const requestHeaders = await headers();
-  const sessionResponse = await fetch(new URL("/api/auth/session", process.env.AUTH_URL ?? "http://localhost:3000"), {
-    headers: {
-      cookie: requestHeaders.get("cookie") ?? "",
-    },
-    cache: "no-store",
-  });
-
-  if (!sessionResponse.ok) {
-    return null;
-  }
-
-  return (await sessionResponse.json()) as { user?: User } | null;
+  return (await auth()) as { user?: User } | null;
 });
 
 export const getCurrentUser = cache(async (): Promise<CurrentUserWithRestaurant | null> => {

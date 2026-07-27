@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { ArrowRight, CalendarDays, Clock3, MapPin, PhoneCall, Sparkles, UtensilsCrossed } from "lucide-react";
+import { ArrowRight, CalendarDays, Clock3, LogIn, MapPin, PhoneCall, Sparkles, UtensilsCrossed } from "lucide-react";
 import { AppShell } from "@/components/layout/app-shell";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -70,19 +70,30 @@ export function PremiumLandingHero({ hero, stats }: PremiumLandingHeroProps) {
                     {hero.secondaryAction.label}
                   </Link>
                 </Button>
-              <Button asChild variant="secondary">
-                <Link href="#localizacao">
-                  <PhoneCall className="h-4 w-4" />
-                  Ver contato
-                </Link>
-              </Button>
-              <Button asChild variant="outline">
-                <Link href="/reservas">
-                  <CalendarDays className="h-4 w-4" />
-                  Reservar mesa
-                </Link>
-              </Button>
-            </div>
+                <Button asChild variant="secondary">
+                  <Link href="/login">
+                    <LogIn className="h-4 w-4" />
+                    Entrar no painel
+                  </Link>
+                </Button>
+                <Button asChild variant="ghost" className="sm:ml-2">
+                  <Link href="#localizacao">
+                    <PhoneCall className="h-4 w-4" />
+                    Ver contato
+                  </Link>
+                </Button>
+              </div>
+
+              <div className="mt-4 flex flex-wrap items-center gap-2 text-sm text-muted-foreground">
+                <span className="inline-flex items-center gap-2 rounded-full border border-border/70 bg-background/80 px-3 py-1.5 shadow-[var(--shadow-soft)]">
+                  <CalendarDays className="h-4 w-4 text-primary" />
+                  Reservas abertas
+                </span>
+                <span className="inline-flex items-center gap-2 rounded-full border border-border/70 bg-background/80 px-3 py-1.5 shadow-[var(--shadow-soft)]">
+                  <Clock3 className="h-4 w-4 text-primary" />
+                  Atendimento em tempo real
+                </span>
+              </div>
 
               <div className="mt-8 grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
                 {stats.map((stat) => (

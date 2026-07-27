@@ -198,7 +198,7 @@ function toFormData(values: RestaurantSettingsInput) {
 
 function SectionCard({ title, description, children }: { title: string; description: string; children: ReactNode }) {
   return (
-    <SectionContainer className="rounded-[2rem] border border-border/70 bg-card/90 py-6 shadow-[var(--shadow-soft)]">
+    <SectionContainer className="rounded-[2rem] border border-border/70 bg-gradient-to-br from-card via-card to-muted/20 py-6 shadow-[var(--shadow-soft)]">
       <div className="mb-6">
         <SectionTitle title={title} />
         <SectionSubtitle>{description}</SectionSubtitle>
@@ -594,7 +594,7 @@ export function SettingsStudio({ restaurant }: SettingsStudioProps) {
 
   return (
     <div className="space-y-8">
-      <div className="flex flex-col gap-4 rounded-[2rem] border border-border/70 bg-card/90 p-6 shadow-sm backdrop-blur xl:flex-row xl:items-end xl:justify-between">
+      <div className="flex flex-col gap-4 rounded-[2rem] border border-border/70 bg-gradient-to-br from-card via-card to-muted/20 p-6 shadow-[var(--shadow-soft)] backdrop-blur xl:flex-row xl:items-end xl:justify-between">
         <div className="max-w-3xl space-y-3">
           <p className="text-xs font-semibold uppercase tracking-[0.32em] text-muted-foreground">RestaurantPro CMS</p>
           <h1 className="text-3xl font-semibold tracking-tight">Centro de Configuração do Restaurante</h1>
@@ -607,7 +607,7 @@ export function SettingsStudio({ restaurant }: SettingsStudioProps) {
             <RotateCcw className="h-4 w-4" />
             Reset
           </Button>
-          <Button type="submit" form="settings-form" disabled={pending}>
+          <Button type="submit" form="settings-form" loading={pending}>
             <Save className="h-4 w-4" />
             {pending ? "Salvando..." : "Salvar configurações"}
           </Button>
@@ -633,7 +633,7 @@ export function SettingsStudio({ restaurant }: SettingsStudioProps) {
 
         <div className="space-y-8">
           <SettingsPreview restaurant={restaurant} draft={draft} />
-          <SectionContainer className="rounded-[2rem] border border-border/70 bg-card/90 py-6 shadow-[var(--shadow-soft)]">
+          <SectionContainer className="rounded-[2rem] border border-border/70 bg-gradient-to-br from-card via-card to-muted/20 py-6 shadow-[var(--shadow-soft)]">
             <div className="mb-4 flex items-center justify-between gap-3">
               <div>
                 <SectionTitle title="Status rápido" />

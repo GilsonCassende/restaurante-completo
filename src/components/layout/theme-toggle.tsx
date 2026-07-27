@@ -22,7 +22,7 @@ export function ThemeToggle() {
       type="button"
       variant="outline"
       size="icon"
-      className="relative"
+      className="relative border-border/70 bg-background/80 shadow-[var(--shadow-soft)]"
       onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
       aria-label="Alternar tema"
     >

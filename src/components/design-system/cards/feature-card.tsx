@@ -13,10 +13,10 @@ type FeatureCardProps = {
 
 export function FeatureCard({ icon, title, description, badge, className }: FeatureCardProps) {
   return (
-    <Card className={cn("group overflow-hidden border-border/70 bg-gradient-to-br from-card to-muted/30 shadow-[var(--shadow-soft)]", className)}>
+    <Card className={cn("group overflow-hidden border-border/70 bg-gradient-to-br from-card via-card to-muted/20 shadow-[var(--shadow-soft)] transition-all duration-200 hover:-translate-y-0.5 hover:shadow-[var(--shadow-card)]", className)}>
       <CardHeader className="space-y-4">
         <div className="flex items-start justify-between gap-3">
-          <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-primary/10 text-primary">
+          <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br from-primary/10 to-primary/5 text-primary">
             {icon ?? <ArrowRight className="h-5 w-5" />}
           </div>
           {badge ? <Badge variant="secondary" className="rounded-full">{badge}</Badge> : null}

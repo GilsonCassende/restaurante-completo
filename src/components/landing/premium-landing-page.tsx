@@ -1,5 +1,6 @@
 import { getRestaurantLanding } from "@/services/landing";
 import type { RestaurantLanding } from "@/services/landing";
+import { LandingTopBar } from "@/components/layout/landing-topbar";
 import { PremiumLandingHero } from "./premium-landing-hero";
 import { PremiumLandingCatalog } from "./premium-landing-catalog";
 import { PremiumLandingStory } from "./premium-landing-story";
@@ -14,6 +15,7 @@ export async function PremiumLandingPage({ landing: providedLanding }: PremiumLa
 
   return (
     <main className="relative overflow-hidden">
+      <LandingTopBar restaurantName={landing.restaurant.name} />
       <PremiumLandingHero hero={landing.hero} stats={landing.stats} />
       <PremiumLandingCatalog
         categories={landing.featuredCategories}

@@ -11,10 +11,10 @@ type InfoCardProps = {
 
 export function InfoCard({ title, description, icon, action, className }: InfoCardProps) {
   return (
-    <Card className={cn("border-border/70 bg-card/90 shadow-[var(--shadow-soft)]", className)}>
+    <Card className={cn("border-border/70 bg-gradient-to-br from-card via-card to-muted/20 shadow-[var(--shadow-soft)] transition-all duration-200 hover:-translate-y-0.5 hover:shadow-[var(--shadow-card)]", className)}>
       <CardHeader className="space-y-4">
         <div className="flex items-center justify-between gap-3">
-          <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-secondary text-secondary-foreground">
+          <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-gradient-to-br from-secondary to-secondary/70 text-secondary-foreground">
             {icon}
           </div>
           {action}

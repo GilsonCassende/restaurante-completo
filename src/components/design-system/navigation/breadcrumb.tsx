@@ -20,13 +20,15 @@ export function Breadcrumb({ items, className }: BreadcrumbProps) {
         return (
           <span key={`${item.label}-${index}`} className="flex items-center gap-2">
             {item.href && !isLast ? (
-              <Link href={item.href} className="text-muted-foreground transition-colors hover:text-foreground">
+              <Link href={item.href} className="rounded-full px-2.5 py-1.5 text-muted-foreground transition-colors hover:bg-muted/70 hover:text-foreground">
                 {item.label}
               </Link>
             ) : (
-              <span className={cn(isLast ? "font-medium text-foreground" : "text-muted-foreground")}>{item.label}</span>
+              <span className={cn("rounded-full px-2.5 py-1.5", isLast ? "bg-primary/10 font-medium text-primary" : "text-muted-foreground")}>
+                {item.label}
+              </span>
             )}
-            {!isLast ? <ChevronRight className="h-4 w-4 text-muted-foreground" /> : null}
+            {!isLast ? <ChevronRight className="h-3.5 w-3.5 text-muted-foreground" /> : null}
           </span>
         );
       })}

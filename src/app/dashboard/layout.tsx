@@ -10,6 +10,7 @@ export default async function DashboardLayout({ children }: { children: ReactNod
     <DashboardShell
       title={`Operação do restaurante - ${user.restaurant.name}`}
       description="Gerencie menu, mesas, pedidos, delivery e logística com isolamento multi-tenant e permissões por role."
+      userRole={user.role}
     >
       {children}
     </DashboardShell>
